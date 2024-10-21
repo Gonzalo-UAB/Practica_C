@@ -69,6 +69,26 @@ float Infininorm( float M[N][N] ) {
 	fabs(MatMM);
 }
 
+
+//Multiplicació escalar
+void MultEscalar( float vect[N], float vectres[N], float alfa ){
+    int i;
+    for (i=0;i<N;i++){
+        vectres[i] = vect[i]*alfa;
+    }
+}
+//Magnitud de un vector
+float Magnitude( float vect[N] ){
+    int i;
+    float suma;
+    float res;
+    for (i=0;i<N;i++){
+        suma = suma+vect[i];
+    }
+    res = sqrt(suma);
+    return res;
+}
+
 int main(){
 	InitData();
 	//PrintVect( V1, 3, 5);
