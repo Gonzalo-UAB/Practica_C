@@ -38,6 +38,13 @@ float Scalar( float vect1[N], float vect2[N] ){
 	return Sumatori;
         }
 }
+}
+void PrintVect( float vect[N], int from, int numel ) {
+int final=((from+numel));
+int i;
+for (i=from;i<final;i++){
+        printf("%f \n", vect[i]);
+}
 
 int main(){
 	printf("%f \n",Scalar(V1,V3));
