@@ -1,3 +1,10 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+int N = 512; 
+float Mat[N][N], MatDD[N][N]; 
+float V1[N], V2[N], V3[N], V4[N]; 
+
 void InitData(){
 int i,j;
 srand(334411);
