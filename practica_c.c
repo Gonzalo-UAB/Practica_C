@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <math.h>
 
 
 #define N 512
@@ -32,20 +33,47 @@ for( i = 0; i < N; i++ ){
 float Scalar( float vect1[N], float vect2[N] ){
 	float Sumatori = 0;
 	float mult = 0;
-        for (int i = 0; i < N+1; i++) {
+        for (int i = 0; i < N; i++) {
                 mult = vect1[i]*vect2[i];
                 Sumatori += mult;
+	}
 	return Sumatori;
-        }
 }
-}
+
+
 void PrintVect( float vect[N], int from, int numel ) {
-int final=((from+numel));
-int i;
-for (i=from;i<final;i++){
-        printf("%f \n", vect[i]);
+	int final=((from+numel));
+	int i;
+	for (i=from;i<final;i++){
+        	printf("%f \n", vect[i]);
+	}
+}
+
+void PrintRow( float mat[N][N], int row, int from, int numel ){
+	int final=((from+numel));
+        int i;
+        for (i=from;i<final;i++){
+                printf("%f \n", mat[row][i]);
+	}
+}
+
+int Ortogonal( float vect1[N], float vect2[N] ) {
+	int ortogonal = 0;
+	if (Scalar( vect1, vect2 )==0){
+		ortogonal = 1;
+	}
+	return ortogonal;
+}
+
+float Infininorm( float M[N][N] ) {
+	fabs(MatMM);
 }
 
 int main(){
-	printf("%f \n",Scalar(V1,V3));
+	InitData();
+	//PrintVect( V1, 3, 5);
+	//PrintRow( Mat, 1, 0, 9 );
+	//printf("%f \n",Scalar( V1,V3 ));
+	printf("%d \n",Ortogonal( V1,V2 ));
 }
+
