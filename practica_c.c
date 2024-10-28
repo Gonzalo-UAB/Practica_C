@@ -84,6 +84,20 @@ float Infininorm( float M[N][N] ) {
 }
 
 
+float NormFrobenius( float M[N][N] ) {
+        int i;
+        int j;
+	float res;
+	float suma = 0;
+        for (i=0;i<N;i++){
+                for (j=0;j<N;j++){
+                        suma += (M[i][j])*(M[i][j]);
+                }
+        }
+	res = sqrt (suma);
+        return res;
+}
+
 int main(){
 	InitData();
 	//PrintVect( V1, 0, 9);
@@ -91,7 +105,8 @@ int main(){
 	//PrintRow( MatDD, 0, 0, 9 );
 	//printf("%f \n",Scalar( V1,V3 ));
 	//printf("%d \n",Ortogonal( V1,V2 ));
-	printf("%f \n",Infininorm(Mat));
+	//printf("%f \n",Infininorm(Mat));
+	printf("%f \n",NormFrobenius(Mat));
 }
 
 
