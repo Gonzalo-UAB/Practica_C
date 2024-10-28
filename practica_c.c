@@ -83,6 +83,21 @@ float Infininorm( float M[N][N] ) {
 	return max;
 }
 
+float Onenorm( float M[N][N] ) {
+        int i;
+        int j;
+        float max;
+        for (i=0;i<N;i++){
+                float suma = 0;
+                for (j=0;j<N;j++){
+                        suma += fabs(M[j][i]);
+                }
+                if ((i == 0) || (max < suma)){
+                        max = suma;
+                }
+        }
+        return max;
+}
 
 float NormFrobenius( float M[N][N] ) {
         int i;
