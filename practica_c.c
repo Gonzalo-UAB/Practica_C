@@ -45,16 +45,18 @@ void PrintVect( float vect[N], int from, int numel ) {
 	int final=((from+numel));
 	int i;
 	for (i=from;i<final;i++){
-        	printf("%f \n", vect[i]);
+        	printf("%f ", vect[i]);
 	}
+	printf("\n");
 }
 
 void PrintRow( float mat[N][N], int row, int from, int numel ){
 	int final=((from+numel));
         int i;
         for (i=from;i<final;i++){
-                printf("%f \n", mat[row][i]);
+                printf("%f ", mat[row][i]);
 	}
+	printf("\n");
 }
 
 int Ortogonal( float vect1[N], float vect2[N] ) {
@@ -66,34 +68,30 @@ int Ortogonal( float vect1[N], float vect2[N] ) {
 }
 
 float Infininorm( float M[N][N] ) {
-	fabs(MatMM);
+	int i;
+	int j;
+	float max;
+	for (i=0;i<N;i++){
+		float suma = 0;
+		for (j=0;j<N;j++){
+			suma += fabs(M[i][j]);
+		}
+		if ((i == 0) || (max < suma)){
+			max = suma;
+		}
+	}
+	return max;
 }
 
-
-//Multiplicació escalar
-void MultEscalar( float vect[N], float vectres[N], float alfa ){
-    int i;
-    for (i=0;i<N;i++){
-        vectres[i] = vect[i]*alfa;
-    }
-}
-//Magnitud de un vector
-float Magnitude( float vect[N] ){
-    int i;
-    float suma;
-    float res;
-    for (i=0;i<N;i++){
-        suma = suma+vect[i];
-    }
-    res = sqrt(suma);
-    return res;
-}
 
 int main(){
 	InitData();
-	//PrintVect( V1, 3, 5);
-	//PrintRow( Mat, 1, 0, 9 );
+	//PrintVect( V1, 0, 9);
+	//PrintRow( Mat, 0, 0, 9 );
+	//PrintRow( MatDD, 0, 0, 9 );
 	//printf("%f \n",Scalar( V1,V3 ));
-	printf("%d \n",Ortogonal( V1,V2 ));
+	//printf("%d \n",Ortogonal( V1,V2 ));
+	printf("%f \n",Infininorm(Mat));
 }
+
 
