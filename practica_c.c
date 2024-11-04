@@ -56,13 +56,13 @@ void MultEscalar( float vect[N], float vectres[N], float alfa ){
 
 //Producte escalar
 float Scalar( float vect1[N], float vect2[N] ){
-	float Sumatori = 0;
+	float sumatori = 0;
 	float mult = 0;
         for (int i = 0; i < N; i++) {
                 mult = vect1[i]*vect2[i];
-                Sumatori += mult;
+                sumatori += mult;
 	}
-	return Sumatori;
+	return sumatori;
 }
 
 //Magnitud de un vector
@@ -135,8 +135,22 @@ float NormFrobenius( float M[N][N] ) {
 
 //Dominant
 int DiagonalDom( float M[N][N] ){
-	int dom = 0;
-
+	int dom = 1;
+	float sumatori = 0;
+	bool bucle=true;
+	while (bucle==true){
+		for (int i=0;i<N;i++){ 
+			for (int j=0;j<N;j++){
+				sumatori+=M[i][j];
+			}
+			if (abs(M[i][i])<abs(sumatori-M[i][i])){
+				dom=0;
+				bucle=false;
+			}
+			sumatori = 0;
+		}
+		bucle=false;
+	}
 	return dom;
 }
 
@@ -149,7 +163,7 @@ void Matriu_x_Vector( float M[N][N], float vect[N], float vectres[N] ) {
 	}
 }
 
-//MAIN
+//Programa principal
 int main(){
 	InitData();
 	//PrintVect( V1, 0, 9);
@@ -159,7 +173,9 @@ int main(){
 	//printf("%d \n",Ortogonal( V1,V2 ));
 	//printf("%f \n",Infininorm(Mat));
 	// printf("%f \n",NormFrobenius(Mat));
-	PrintVect(Matriu_x_Vector(Mat,V2,V4),0,10);
+	printf("%d \n",DiagonalDom(MatDD));
+	// Matriu_x_Vector(Mat,V2,V4); 
+	// PrintVect(V4,0,10);
 
 }
 
