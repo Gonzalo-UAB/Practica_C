@@ -43,7 +43,7 @@ void PrintVect( float vect[N], int from, int numel ) {
 int final=((from+numel));
 int i;
 for (i=from;i<final;i++){
-        printf("%i %f",i ,vect[i]);
+        printf(" %i %f",i ,vect[i]);
 }
 }
 //Multiplicació escalar
@@ -66,20 +66,23 @@ float Magnitude( float vect[N] ){
 }
 //Projecció
 void Projection( float vect1[N], float vect2[N], float vectres[N]){
-float esc=Scalar(vect1,vect2);
-float magni=Magnitude(vect2)/esc;
-MultEscalar(vect1,vectres,magni);
+    float esc=Scalar(vect1,vect2);
+    printf("Variable: %f \n",esc);
+    float magni=esc/Magnitude(vect2);
+    MultEscalar(vect2,vectres,magni);
 
 }
 
 int main(){
 InitData();
-float esc=Scalar(V2,V3);
-printf("%f \n",esc);
-printf("%f \n",Magnitude(V3)/esc);
-Projection(V2,V3,V1);
-PrintVect(V1,0,10);
+// float esc=Scalar(V2,V3);
+// printf("Variable: %f \n",esc);
+// printf("Directo de la función: %f \n",Scalar(V2,V3));
+// printf("%f \n",Magnitude(V3)/esc);
+// PrintVect(V3,0,10);
 
+Projection(V1,V2,V1);
+PrintVect(V1,0,10);
 
 
 
