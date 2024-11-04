@@ -1,4 +1,4 @@
-#include <stdio.h>
+w#include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <math.h>
@@ -29,6 +29,35 @@ for( i = 0; i < N; i++ ){
 }
 }
 
+
+//Imprimir vector
+void PrintVect( float vect[N], int from, int numel ) {
+	int final=((from+numel));
+	int i;
+	for (i=from;i<final;i++){
+        	printf("%f ", vect[i]);
+	}
+	printf("\n");
+}
+
+//Imprimir fila matriu
+void PrintRow( float mat[N][N], int row, int from, int numel ){
+	int final=((from+numel));
+        int i;
+        for (i=from;i<final;i++){
+                printf("%f ", mat[row][i]);
+	}
+	printf("\n");
+}
+
+//Multiplicació escalar
+void MultEscalar( float vect[N], float vectres[N], float alfa ){
+    int i;
+    for (i=0;i<N;i++){
+        vectres[i] = vect[i]*alfa;
+    }
+}
+
 //Producte escalar
 float Scalar( float vect1[N], float vect2[N] ){
 	float Sumatori = 0;
@@ -40,25 +69,19 @@ float Scalar( float vect1[N], float vect2[N] ){
 	return Sumatori;
 }
 
-
-void PrintVect( float vect[N], int from, int numel ) {
-	int final=((from+numel));
-	int i;
-	for (i=from;i<final;i++){
-        	printf("%f ", vect[i]);
-	}
-	printf("\n");
+//Magnitud de un vector
+float Magnitude( float vect[N] ){
+    int i;
+    float suma = 0;
+    float res;
+    for (i=0;i<N;i++){
+        suma = suma+pow(vect[i],2);
+    }
+    res = sqrt(suma);
+    return res;
 }
 
-void PrintRow( float mat[N][N], int row, int from, int numel ){
-	int final=((from+numel));
-        int i;
-        for (i=from;i<final;i++){
-                printf("%f ", mat[row][i]);
-	}
-	printf("\n");
-}
-
+//Ortogonal
 int Ortogonal( float vect1[N], float vect2[N] ) {
 	int ortogonal = 0;
 	if (Scalar( vect1, vect2 )==0){
@@ -67,6 +90,14 @@ int Ortogonal( float vect1[N], float vect2[N] ) {
 	return ortogonal;
 }
 
+//Projecció
+void Projection( float vect1[N], float vect2[N], float vectres[N]){
+float esc=Scalar(vect1,vect2);
+float magni=Magnitude(vect2)/esc;
+MultEscalar(vect1,vectres,magni);
+}
+
+//Infini-norma
 float Infininorm( float M[N][N] ) {
 	int i;
 	int j;
@@ -83,6 +114,7 @@ float Infininorm( float M[N][N] ) {
 	return max;
 }
 
+//Norma-ú
 float Onenorm( float M[N][N] ) {
         int i;
         int j;
@@ -99,6 +131,7 @@ float Onenorm( float M[N][N] ) {
         return max;
 }
 
+//Norma de Frobenius
 float NormFrobenius( float M[N][N] ) {
         int i;
         int j;
@@ -113,6 +146,8 @@ float NormFrobenius( float M[N][N] ) {
         return res;
 }
 
+
+//MAIN
 int main(){
 	InitData();
 	//PrintVect( V1, 0, 9);
