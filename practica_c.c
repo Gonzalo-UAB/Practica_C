@@ -88,8 +88,8 @@ int Ortogonal( float vect1[N], float vect2[N] ) {
 //Projecció
 void Projection( float vect1[N], float vect2[N], float vectres[N]){
 float esc=Scalar(vect1,vect2);
-float magni=Magnitude(vect2)/esc;
-MultEscalar(vect1,vectres,magni);
+float magni=esc/Magnitude(vect2);
+MultEscalar(vect2,vectres,magni);   
 }
 
 //Infini-norma
@@ -169,13 +169,18 @@ int main(){
 	//PrintVect( V1, 0, 9);
 	//PrintRow( Mat, 0, 0, 9 );
 	//PrintRow( MatDD, 0, 0, 9 );
+	// MultEscalar( V3,V4,2.0 );
+	// PrintVect(V4,0,10);
 	//printf("%f \n",Scalar( V1,V3 ));
+	//printf("%f \n",Magnitude(V1));
 	//printf("%d \n",Ortogonal( V1,V2 ));
+	Projection(V2,V3,V4);
+	PrintVect(V4,0,10);
 	//printf("%f \n",Infininorm(Mat));
 	// printf("%f \n",NormFrobenius(Mat));
-	printf("%d \n",DiagonalDom(MatDD));
+	// printf("%d \n",DiagonalDom(MatDD));
 	// Matriu_x_Vector(Mat,V2,V4); 
-	// PrintVect(V4,0,10);
+	// PrintVect(V4,0,9);
 
 }
 
