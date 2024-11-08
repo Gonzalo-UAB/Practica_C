@@ -75,6 +75,21 @@ void Projection( float vect1[N], float vect2[N], float vectres[N]){
 //Dominant
 int DiagonalDom( float M[N][N] ){
 	int dom = 1;
+	float sumatori = 0;
+	bool bucle=true;
+	while (bucle==true){
+		for (int i=0;i<N;i++){ 
+			for (int j=0;j<N;j++){
+				sumatori+=M[i][j];
+			}
+			if (abs(M[i][i])<abs(sumatori-M[i][i])){
+				dom=0;
+				bucle=false;
+			}
+			sumatori = 0;
+		}
+		bucle=false;
+	}
 	return dom;
 }
 //Multiplicació d’una matriu per un vector
@@ -89,44 +104,32 @@ void Matriu_x_Vector( float M[N][N], float vect[N], float vectres[N] ) {
 
 int Jacobi( float M[N][N] , float vect[N], float vectres[N], unsigned iter ){
     float resta =0;
-    // for(int i = 0; i < N; i++ ){
-    //         for(int j = 0; j < N; j++ ){
-    //             printf("%f ",M[i][j]);
-    //         }}
+    float vectorX[N];
     if (DiagonalDom(M)){
-        float D[N][N];
-        float R[N][N];
-        for(int i = 0; i < N; i++ ){
-            for(int j = 0; j < N; j++ ){
-                if (i==j){
-                    D[i][j]==M[i][j];
-                    R[i][j]==0;
-                }
-                else{
-                    D[i][j]==0;
-                    R[i][j]==M[i][j];
-                }
-            }
-        }
-        for (int i=0; i<N;i++){
-            vectres[i]=vect[i]/M[i][i];
-        }
-
-
         for(int repeticiones=0;repeticiones<iter;repeticiones++){
-            for (int i=0;i<N;i++){
-                resta=vectres[i];
-                for (int j=0;i<N;i++){
-                    if (i!=j){
-                        resta = resta-(M[i][j]*vectres[j]);
-                        // printf("M: %f resta: %f vectres:%f \n",M[i][j],resta,vectres[i]);
-                    }                    
+            if (repeticiones==0){
+                for (int i=0; i<N;i++){
+                vectorX[i]=vect[i]/M[i][i];
                 }
-                // printf("(vectres[i]-resta)/M[i][i] (%f-%f)/%f \n",vectres[i],resta,M[i][i]);
-                vectres[i]=(resta)/M[i][i];
-
             }
-        printf("Repeticion:%d Primer resultado:%f \n",repeticiones,vectres[0]);
+            else{
+                for (int i=0;i<N;i++){ 
+                    resta=vect[i];
+                    for (int j=0;j<N;j++){
+                        if (i!=j){
+                            resta = resta-(M[i][j]*vectorX[j]);
+                            if (i==0) printf("M: %f resta: %f vectres:%f \n",M[i][j],resta,vectres[i]);
+                        }                    
+                    }
+                    if (i==0) printf("(vectres[i]-resta)/M[i][i] (%f-%f)/%f \n",vectres[i],resta,M[i][i]);
+                    vectorX[i]=(resta)/M[i][i];
+
+                }
+            }
+        printf("Repeticion:%d Primer resultado:%f \n",repeticiones,vectorX[0]);
+        }
+        for (int i=0;i<N;i++){
+            vectres[i]=vectorX[i];
         }
 
 
@@ -139,7 +142,7 @@ int Jacobi( float M[N][N] , float vect[N], float vectres[N], unsigned iter ){
 
 int main(){
 InitData();
-Jacobi(MatDD,V3,V2,1000);
+printf("%d",Jacobi(MatDD,V3,V2,1));
 PrintVect(V2,0,10);
 printf("\n");
 }
