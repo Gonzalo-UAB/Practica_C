@@ -74,28 +74,30 @@ void Projection( float vect1[N], float vect2[N], float vectres[N]){
 }
 //Dominant
 int DiagonalDom( float M[N][N] ){
-	int dom = 0;
-
+	int dom = 1;
 	return dom;
 }
 //Multiplicació d’una matriu per un vector
 void Matriu_x_Vector( float M[N][N], float vect[N], float vectres[N] ) {
 	for (int i=0;i<N;i++){
-		for (int j=0;j<N;j++){
-			vectres[i]=Scalar( M[i], vect);
-		}
+		vectres[i]=Scalar( M[i], vect);
+		
 	}
 }
-Jacobi 
-https://www.ingenieria.unam.mx/pinilla/PE105117/pdfs/tema3/3-3_metodos_jacobi_gauss-seidel.pdf
+// Jacobi 
+// https://www.ingenieria.unam.mx/pinilla/PE105117/pdfs/tema3/3-3_metodos_jacobi_gauss-seidel.pdf
 
 int Jacobi( float M[N][N] , float vect[N], float vectres[N], unsigned iter ){
-    
-    if (DiagonalDom(M[N][N])){
+    float resta =0;
+    // for(int i = 0; i < N; i++ ){
+    //         for(int j = 0; j < N; j++ ){
+    //             printf("%f ",M[i][j]);
+    //         }}
+    if (DiagonalDom(M)){
         float D[N][N];
         float R[N][N];
-        for( i = 0; i < N; i++ ){
-            for( j = 0; j < N; j++ ){
+        for(int i = 0; i < N; i++ ){
+            for(int j = 0; j < N; j++ ){
                 if (i==j){
                     D[i][j]==M[i][j];
                     R[i][j]==0;
@@ -106,16 +108,38 @@ int Jacobi( float M[N][N] , float vect[N], float vectres[N], unsigned iter ){
                 }
             }
         }
-        Matriu_x_Vector(R,vect,vect[N]);
-        return 1
+        for (int i=0; i<N;i++){
+            vectres[i]=vect[i]/M[i][i];
+        }
+
+
+        for(int repeticiones=0;repeticiones<iter;repeticiones++){
+            for (int i=0;i<N;i++){
+                resta=vectres[i];
+                for (int j=0;i<N;i++){
+                    if (i!=j){
+                        resta = resta-(M[i][j]*vectres[j]);
+                        // printf("M: %f resta: %f vectres:%f \n",M[i][j],resta,vectres[i]);
+                    }                    
+                }
+                // printf("(vectres[i]-resta)/M[i][i] (%f-%f)/%f \n",vectres[i],resta,M[i][i]);
+                vectres[i]=(resta)/M[i][i];
+
+            }
+        printf("Repeticion:%d Primer resultado:%f \n",repeticiones,vectres[0]);
+        }
+
+
+        return 1;
     }
     else{
-        return 0
+        return 0;
     }
 }
+
 int main(){
 InitData();
-Projection(V2,V3,V4);
-PrintVect(V4,0,10);
+Jacobi(MatDD,V3,V2,1000);
+PrintVect(V2,0,10);
 printf("\n");
 }
