@@ -1,9 +1,10 @@
+//Llibreries
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <math.h>
 
-
+//Declaració i definició de variables
 #define N 512
 float Mat[N][N];
 float MatDD[N][N];
@@ -67,13 +68,11 @@ float Scalar( float vect1[N], float vect2[N] ){
 
 //Magnitud de un vector
 float Magnitude( float vect[N] ){
-    float suma = 0;
-    float res;
+    float sumatori = 0;
     for (int i=0;i<N;i++){
-        suma = suma+pow(vect[i],2);
+        sumatori += pow(vect[i],2);
     }
-    res = sqrt(suma);
-    return res;
+    return sqrt(sumatori);
 }
 
 //Ortogonal
@@ -87,9 +86,9 @@ int Ortogonal( float vect1[N], float vect2[N] ) {
 
 //Projecció
 void Projection( float vect1[N], float vect2[N], float vectres[N]){
-float esc=Scalar(vect1,vect2);
-float magni=esc/Magnitude(vect2);
-MultEscalar(vect2,vectres,magni);   
+	float esc=Scalar(vect1,vect2);
+	float magni=esc/Magnitude(vect2);
+	MultEscalar(vect2,vectres,magni);   
 }
 
 //Infini-norma
@@ -124,16 +123,16 @@ float Onenorm( float M[N][N] ) {
 
 //Norma de Frobenius
 float NormFrobenius( float M[N][N] ) {
-	float suma = 0;
+	float sumatori = 0;
     for (int i=0;i<N;i++){
         for (int j=0;j<N;j++){
-                    suma += (M[i][j])*(M[i][j]);
+                    sumatori += (M[i][j])*(M[i][j]);
             }
     }
-        return  sqrt(suma);
+        return  sqrt(sumatori);
 }
 
-//Dominant
+//Diagonal Dominant
 int DiagonalDom( float M[N][N] ){
 	int dom = 1;
 	float sumatori = 0;
@@ -157,10 +156,46 @@ int DiagonalDom( float M[N][N] ){
 //Multiplicació d’una matriu per un vector
 void Matriu_x_Vector( float M[N][N], float vect[N], float vectres[N] ) {
 	for (int i=0;i<N;i++){
-		for (int j=0;j<N;j++){
-			vectres[i]=Scalar( M[i], vect);
-		}
+		vectres[i]=Scalar( M[i], vect);
 	}
+}
+
+// Jacobi 
+int Jacobi( float M[N][N] , float vect[N], float vectres[N], unsigned iter ){
+    float resta =0;
+    float vectorX[N];
+    if (DiagonalDom(M)){
+        for(int repeticions=0;repeticions<iter;repeticions++){
+            if (repeticions==0){
+                for (int i=0; i<N;i++){
+                vectorX[i]=vect[i]/M[i][i];
+                }
+            }
+            else{
+                for (int i=0;i<N;i++){ 
+                    resta=vect[i];
+                    for (int j=0;j<N;j++){
+                        if (i!=j){
+                            resta = resta-(M[i][j]*vectorX[j]);
+                            if (i==0) printf("M: %f Resta: %f Vectres:%f \n",M[i][j],resta,vectres[i]);
+                        }                    
+                    }
+                    if (i==0) printf("(vectres[i]-resta)/M[i][i] (%f-%f)/%f \n",vectres[i],resta,M[i][i]);
+                    vectorX[i]=(resta)/M[i][i];
+
+                }
+            }
+        printf("Repetició:%d Primer resultat:%f \n",repeticions,vectorX[0]);
+        }
+        for (int i=0;i<N;i++){
+            vectres[i]=vectorX[i];
+        }
+
+        return 1;
+    }
+    else{
+        return 0;
+    }
 }
 
 //Programa principal
@@ -169,19 +204,20 @@ int main(){
 	//PrintVect( V1, 0, 9);
 	//PrintRow( Mat, 0, 0, 9 );
 	//PrintRow( MatDD, 0, 0, 9 );
-	// MultEscalar( V3,V4,2.0 );
-	// PrintVect(V4,0,10);
+	//MultEscalar( V3,V4,2.0 );
+	//PrintVect(V4,0,10);
 	//printf("%f \n",Scalar( V1,V3 ));
 	//printf("%f \n",Magnitude(V1));
 	//printf("%d \n",Ortogonal( V1,V2 ));
-	Projection(V2,V3,V4);
-	PrintVect(V4,0,10);
+	//Projection(V2,V3,V4);
+	//PrintVect(V4,0,10);
 	//printf("%f \n",Infininorm(Mat));
-	// printf("%f \n",NormFrobenius(Mat));
-	// printf("%d \n",DiagonalDom(MatDD));
-	// Matriu_x_Vector(Mat,V2,V4); 
-	// PrintVect(V4,0,9);
-
+	//printf("%f \n",NormFrobenius(Mat));
+	//printf("%d \n",DiagonalDom(MatDD));
+	//Matriu_x_Vector(Mat,V2,V4); 
+	//PrintVect(V4,0,9);
+	printf("%d \n",Jacobi(MatDD,V3,V4,1));
+	PrintVect(V4,0,10);
 }
 
 
