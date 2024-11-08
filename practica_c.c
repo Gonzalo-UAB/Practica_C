@@ -177,20 +177,15 @@ int Jacobi( float M[N][N] , float vect[N], float vectres[N], unsigned iter ){
                     for (int j=0;j<N;j++){
                         if (i!=j){
                             resta = resta-(M[i][j]*vectorX[j]);
-                            if (i==0) printf("M: %f Resta: %f Vectres:%f \n",M[i][j],resta,vectres[i]);
                         }                    
                     }
-                    if (i==0) printf("(vectres[i]-resta)/M[i][i] (%f-%f)/%f \n",vectres[i],resta,M[i][i]);
                     vectorX[i]=(resta)/M[i][i];
-
                 }
             }
-        printf("Repetició:%d Primer resultat:%f \n",repeticions,vectorX[0]);
         }
         for (int i=0;i<N;i++){
             vectres[i]=vectorX[i];
         }
-
         return 1;
     }
     else{
