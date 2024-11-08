@@ -211,8 +211,8 @@ int main(){
 	//printf("%d \n",DiagonalDom(MatDD));
 	//Matriu_x_Vector(Mat,V2,V4); 
 	//PrintVect(V4,0,9);
-	printf("%d \n",Jacobi(MatDD,V3,V4,1));
-	PrintVect(V4,0,10);
+	//printf("%d \n",Jacobi(MatDD,V3,V4,1000));
+	//PrintVect(V4,0,10);
 }
 
 
